@@ -20,6 +20,7 @@ data "aws_ami" "amazon_linux_2" {
   owners = ["amazon"]
 }
 
+
 resource "aws_instance" "openvpn" {
   ami                         = data.aws_ami.amazon_linux_2.id
   associate_public_ip_address = true
@@ -37,6 +38,7 @@ resource "aws_instance" "openvpn" {
     Provisioner = "Terraform"
   }
 }
+
 
 resource "null_resource" "openvpn" {
   connection {
@@ -65,9 +67,9 @@ EOT
   }
 }
 
+
 resource "null_resource" "openvpn_users_script" {
   depends_on = [null_resource.openvpn]
-
   triggers = {
     ovpn_users = join(" ", var.ovpn_users)
   }
@@ -94,9 +96,9 @@ resource "null_resource" "openvpn_users_script" {
   }
 }
 
+
 resource "null_resource" "openvpn_download_configurations" {
   depends_on = [null_resource.openvpn_users_script]
-
   triggers = {
     ovpn_users = join(" ", var.ovpn_users)
   }
