@@ -100,3 +100,4 @@ scp -i vijay.pem ec2-user@<public_ip>:/home/ec2-user/vijay.ovpn .
 
 ![image](https://user-images.githubusercontent.com/66196388/207386004-2334da64-8867-469a-82b3-50f7cef6554a.png)
 
+> you can only ping and connect to instances within vpc where openvpn server is deployed
