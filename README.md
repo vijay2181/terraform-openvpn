@@ -1,11 +1,10 @@
 # OpenVpn Server Configuration on AWS
 
+![image](https://user-images.githubusercontent.com/66196388/207385243-120496c5-ec86-47da-ae67-f2b8382e8f27.png)
+
+
 
 This document provides steps to configure single node [OpenVPN Server](https://en.wikipedia.org/wiki/OpenVPN) cluster in a dedicated AWS VPC and subnet. The OpenVPN server is configured to be readily accessible by the users supplied in the Terraform input file. The same Terraform input file can be used to subsequently update the list of authorised users
-
-
-image.png
-
 
 
 ### Please note the following things before you start working on this.
@@ -66,9 +65,12 @@ In variables.tf file change the variables According to your need
 - ovpn_users
 - ovpn_config_directory
 
+
 > Each user provisioned via input `ovpn_users` should preferably be defined as a single word (i.e., no whitespace), _consisting only of ASCII letters and numbers with underscores as delimiters_; in technical terms, each user should adhere to `^[a-zA-Z0-9_]+$`
 
+
 > make sure you have pem key in the instance, so that with this pem key terraform will ssh into OpenVpn server and copy script
+
 
 ```
 terraform init
@@ -81,15 +83,20 @@ terraform apply
 Once the Terraform module execution has successfully completed, the connection to the OpenVPN can be tested as follows.
 
 > For windows users you can download "OpenVpn GUI for windows"
-https://openvpn.net/community-downloads/
-you can download the client from above link(ex:- https://swupdate.openvpn.org/community/releases/OpenVPN-2.5.8-I604-amd64.msi)
+> https://openvpn.net/community-downloads/
+> you can download the client from above link(ex:- https://swupdate.openvpn.org/community/releases/OpenVPN-2.5.8-I604-amd64.msi)
+
 
 > valid OpenVPN configuration will downloaded to `generated/ovpn-config/vijay.ovpn `, the connection can be tested by initiating the actual `openvpn`
 
-> import the file to local machine to test on windows machine, open gitbash where your pem file is present
+
+> import the file to local windows machine to test, open gitbash where your pem file is present
 
 ```
 scp -i vijay.pem ec2-user@<public_ip>:/home/ec2-user/vijay.ovpn .
 ```
 
 > import the file by double clicking on it, click on the user and connect
+
+![image](https://user-images.githubusercontent.com/66196388/207386004-2334da64-8867-469a-82b3-50f7cef6554a.png)
+
