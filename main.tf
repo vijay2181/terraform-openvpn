@@ -5,25 +5,20 @@ data "aws_ami" "amazon_linux_2" {
     name   = "name"
     values = ["amzn2-ami-hvm*"]
   }
-
   filter {
     name   = "architecture"
     values = ["x86_64"]
   }
-
   filter {
     name   = "block-device-mapping.volume-type"
     values = ["gp2"]
   }
-
   filter {
     name   = "virtualization-type"
     values = ["hvm"]
   }
-
   owners = ["amazon"]
 }
-
 
 resource "aws_instance" "openvpn" {
   ami                         = data.aws_ami.amazon_linux_2.id
@@ -32,13 +27,11 @@ resource "aws_instance" "openvpn" {
   key_name                    = var.key_name
   subnet_id                   = aws_subnet.openVpn-public-subnet.id
   vpc_security_group_ids      = [aws_security_group.openVpn-SG.id]
-
   root_block_device {
     volume_type           = "gp2"
     volume_size           = var.instance_root_block_device_volume_size
     delete_on_termination = true
   }
-
   tags = {
     Name        = var.tag_name
     Provisioner = "Terraform"
@@ -67,7 +60,6 @@ resource "null_resource" "openvpn" {
            APPROVE_IP=${aws_instance.openvpn.public_ip} \
            ENDPOINT=${aws_instance.openvpn.public_dns} \
            ./openvpn-install.sh
-
 EOT
   ]
   }
